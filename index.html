@@ -35,7 +35,7 @@
         
         /* Hero Background - Brisbane/Australia Vibe */
         .hero-bg-main { 
-            background: linear-gradient(rgba(15, 23, 42, 0.5), rgba(0, 102, 204, 0.4)), url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSB7_9ma-pAkBGfqMw1TD8_CkawGeEWkmVgPDS9hy1sDdLAjwU-gnqnNGWToxSH');
+            background: linear-gradient(rgba(15, 23, 42, 0.5), rgba(0, 102, 204, 0.4)), url('https://cd-visit.beda.systems/-/jssmedia/project/beda/shared/1_brisbane-lga/1_the-city/brisbane_howard-smith-wharves_brisbane-river.jpg?h=1080&iar=0&w=1920&rev=6d85cd73e6b84a349ceb835ac2ae2acf&hash=A11B367C3AD46234309772E593242E53&mw=1080');
             background-size: cover;
             background-position: center;
         } 
@@ -170,7 +170,7 @@
                         <i class="fa-regular fa-calendar-check"></i> 7월 11일 (토) ~ 7월 18일 (토) [6박 8일]
                     </div>
                     <div class="bg-white text-orange-800 shadow-lg p-4 rounded-lg flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-plane"></i> 대한항공(KE) 브리즈번 직항
+                        <i class="fa-solid fa-plane"></i> 대한항공(KE) 또는 젯스타(JQ) 직항
                     </div>
                 </div>
             </div>
@@ -210,26 +210,65 @@
                 <div class="text-center mb-8">
                     <h2 class="text-2xl font-bold text-slate-800">국적기 기준 항공 스케줄</h2>
                     <p class="text-slate-500 text-sm mt-1">아이들의 안전하고 편안한 비행을 위해 대한항공(KE) 직항편을 기준으로 합니다.</p>
-                    <p class="text-red-500 font-bold text-xs mt-2"><i class="fa-solid fa-circle-exclamation"></i> 현지 항공 상황 및 일정에 따라 '젯스타(Jetstar) 직항'으로 변경 진행될 수 있습니다.</p>
+                    <p class="text-red-500 font-bold text-xs mt-2"><i class="fa-solid fa-circle-exclamation"></i> 현지 항공 상황 및 발권 시점에 따라 '1안(대한항공)' 또는 '2안(젯스타)'으로 확정 진행됩니다.</p>
                 </div>
-                <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-xl shrink-0">
-                            <i class="fa-solid fa-plane-departure"></i>
-                        </div>
-                        <div>
-                            <p class="text-sm text-slate-500 font-bold mb-1">출국 스케줄 (7/11 토)</p>
-                            <p class="text-lg font-black text-slate-800">KE 407 <span class="text-orange-600 text-sm ml-2">인천(ICN) ➔ 브리즈번(BNE)</span></p>
+                
+                <div class="max-w-4xl mx-auto space-y-6">
+                    <!-- 1안: 대한항공 -->
+                    <div class="bg-white p-6 rounded-2xl border border-blue-200 shadow-sm relative overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-md">
+                        <div class="absolute top-0 left-0 w-2 h-full bg-blue-500"></div>
+                        <h3 class="text-lg font-bold text-blue-800 mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-plane-up"></i> [1안] 대한항공(KE) 직항 스케줄
+                        </h3>
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-xl shrink-0">
+                                    <i class="fa-solid fa-plane-departure"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-slate-500 font-bold mb-1">출국 스케줄 (7/11 토)</p>
+                                    <p class="text-lg font-black text-slate-800">KE 407 <span class="text-blue-600 text-sm ml-2">인천(ICN) ➔ 브리즈번(BNE)</span></p>
+                                </div>
+                            </div>
+                            <div class="hidden md:block w-px h-12 bg-slate-300"></div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-xl shrink-0">
+                                    <i class="fa-solid fa-plane-arrival"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-slate-500 font-bold mb-1">귀국 스케줄 (7/18 토)</p>
+                                    <p class="text-lg font-black text-slate-800">KE 408 <span class="text-blue-600 text-sm ml-2">브리즈번(BNE) ➔ 인천(ICN)</span></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="hidden md:block w-px h-12 bg-slate-300"></div>
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xl shrink-0">
-                            <i class="fa-solid fa-plane-arrival"></i>
-                        </div>
-                        <div>
-                            <p class="text-sm text-slate-500 font-bold mb-1">귀국 스케줄 (7/18 토)</p>
-                            <p class="text-lg font-black text-slate-800">KE 408 <span class="text-orange-600 text-sm ml-2">브리즈번(BNE) ➔ 인천(ICN)</span></p>
+
+                    <!-- 2안: 젯스타 -->
+                    <div class="bg-white p-6 rounded-2xl border border-orange-200 shadow-sm relative overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-md">
+                        <div class="absolute top-0 left-0 w-2 h-full bg-orange-500"></div>
+                        <h3 class="text-lg font-bold text-orange-800 mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-plane-up"></i> [2안] 젯스타항공(JQ) 직항 스케줄
+                        </h3>
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-orange-50 text-orange-600 rounded-full flex items-center justify-center text-xl shrink-0">
+                                    <i class="fa-solid fa-plane-departure"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-slate-500 font-bold mb-1">출국 스케줄 (7/11 토)</p>
+                                    <p class="text-lg font-black text-slate-800">JQ 직항 <span class="text-orange-600 text-sm ml-2">인천(ICN) ➔ 브리즈번(BNE)</span></p>
+                                </div>
+                            </div>
+                            <div class="hidden md:block w-px h-12 bg-slate-300"></div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-orange-50 text-orange-600 rounded-full flex items-center justify-center text-xl shrink-0">
+                                    <i class="fa-solid fa-plane-arrival"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-slate-500 font-bold mb-1">귀국 스케줄 (7/18 토)</p>
+                                    <p class="text-lg font-black text-slate-800">JQ 직항 <span class="text-orange-600 text-sm ml-2">브리즈번(BNE) ➔ 인천(ICN)</span></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
