@@ -101,7 +101,8 @@
         .solid-path {
             stroke-dasharray: 4000;
             stroke-dashoffset: 4000;
-            animation: drawPath 2s ease-in-out forwards;
+            /* 💡 속도를 4.5초로 늦추고, 처음엔 느리게(ease-in) 시작하여 목적지에서 빠르게 끝나는 애니메이션 적용 */
+            animation: drawPath 4.5s ease-in forwards;
         }
         @keyframes drawPath {
             to { stroke-dashoffset: 0; }
@@ -476,7 +477,8 @@
             <div class="container mx-auto px-4">
                 <div class="text-center mb-10">
                     <span class="text-orange-600 font-bold tracking-wider uppercase">Weekly Schedule</span>
-                    <h2 class="text-3xl md:text-4xl font-bold mt-2">일일 상세 일과표 (최종안)</h2>
+                    <!-- 💡 최종안 -> 제안단계 로 명확히 수정하여 실무 혼선 방지 -->
+                    <h2 class="text-3xl md:text-4xl font-bold mt-2">일일 상세 일과표 (제안단계)</h2>
                     <p class="text-slate-500 mt-2">안전 교육, 코알라 생태 체험, 현지 로컬 스쿨링 등 다채로운 일정이 준비되어 있습니다.</p>
                 </div>
 
