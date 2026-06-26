@@ -33,6 +33,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <style>
+        :root { --tm: #004098; --tm-dark: #002d6b; }
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8fafc; color: #1e293b; }
 
         .hero-bg-main {
@@ -105,12 +106,54 @@
         .tag-weekend  { background:#fef3c7; color:#b45309; }
         .tag-special  { background:#f0fdf4; color:#15803d; }
         .tag-excursion{ background:#fff7ed; color:#c2410c; }
+
+        /* A4 인쇄 전용 (투어메이커 표준 11/75/14) */
+        @media screen { #print-area { display: none !important; } }
+        @media print {
+            @page { size: A4 portrait; margin: 12mm 15mm; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            html, body { background: #fff !important; color: #000 !important; height: auto !important; overflow: visible !important; }
+            header, footer, section:not(#print-area), .no-print { display: none !important; }
+            main, body { padding: 0 !important; margin: 0 !important; width: 100% !important; background: #fff !important; }
+            #print-area { display: block !important; width: 100%; box-sizing: border-box; }
+            .print-header-top { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid var(--tm); padding-bottom: 6px; margin-bottom: 12px; }
+            .print-header-top img { height: 26px; }
+            .print-doc-no { font-size: 9px; color: #555; font-weight: bold; }
+            .print-title { text-align: center; font-size: 18px; font-weight: 900; color: var(--tm); margin-bottom: 4px; line-height: 1.4; letter-spacing: -0.03em; }
+            .print-subtitle { text-align: center; font-size: 9.5px; color: #475569; margin: 0 0 10px 0; font-weight: 500; }
+            .print-overview { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; background: #f8fafc !important; border: 1px solid #cbd5e1 !important; border-radius: 4px; padding: 10px 14px; margin-bottom: 12px; font-size: 10px; }
+            .print-overview .label { font-weight: 800; color: var(--tm); margin-right: 4px; }
+            .tm-table { width: 100%; border-collapse: collapse; font-size: 9.5px; table-layout: fixed; border: 1.5px solid #1e293b !important; }
+            .tm-table th { border: 1px solid #1e293b !important; background: #f1f5f9 !important; font-weight: bold; text-align: center; padding: 5px 4px !important; font-size: 10px; color: var(--tm); }
+            .tm-table td { border: 1px solid #1e293b !important; padding: 6px 8px !important; vertical-align: top; word-break: keep-all; line-height: 1.4; font-size: 9.5px; }
+            .tm-table tbody tr { page-break-inside: avoid; break-inside: avoid; }
+            .tm-col-date { width: 11%; text-align: center; font-weight: 700; background: #f8fafc !important; vertical-align: middle; line-height: 1.45; }
+            .tm-col-desc { width: 75%; }
+            .tm-col-meal { width: 14%; text-align: center; vertical-align: middle; }
+            .tm-day-divider td { border-top: 1.5px solid #1e293b !important; }
+            .tm-time-flow { font-size: 9.5px !important; margin-bottom: 4px !important; font-weight: bold; }
+            .tm-time-tag { color: var(--tm); margin-right: 4px; }
+            .tm-highlight { font-weight: 700; color: var(--tm); }
+            .tm-desc-list { list-style: none; margin: 3px 0 !important; padding-left: 2px; }
+            .tm-desc-list li { position: relative; padding-left: 10px; margin-bottom: 3px !important; }
+            .tm-desc-list li::before { content: '■'; font-size: 7px; position: absolute; left: 0; top: 3.5px; color: var(--tm); }
+            .tm-hotel-divider { border: 0; border-top: 1px dashed #94a3b8; margin: 5px 0 3px 0; }
+            .tm-hotel-info { font-size: 8.5px !important; font-weight: bold; color: #334155; }
+            .tm-meal-wrapper { display: flex; flex-direction: column; gap: 4px; text-align: left; padding-left: 2px; }
+            .tm-meal-simple { display: flex; align-items: flex-start; font-size: 9px !important; line-height: 1.35; }
+            .tm-meal-simple strong { color: var(--tm); margin-right: 3px; width: 14px; flex-shrink: 0; }
+            .print-contacts { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 18px; padding: 8px 10px; background: #f8fafc !important; border: 1px solid #cbd5e1 !important; border-radius: 4px; font-size: 9.5px; margin-top: 10px; margin-bottom: 6px; }
+            .print-contacts .pc-role { font-weight: 700; color: var(--tm); margin-right: 4px; }
+            .print-credit { margin-top: 8px; padding-top: 6px; border-top: 1px solid #cbd5e1; text-align: center; }
+            .print-credit-text { font-size: 8.5px; color: #475569; font-weight: 500; }
+            .print-disclaimer { font-size: 8.5px; color: #64748b; margin-top: 6px; line-height: 1.4; }
+        }
     </style>
 </head>
 <body class="antialiased bg-slate-50">
 
 <!-- ───────────── HEADER ───────────── -->
-<header class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50">
+<header class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50 no-print">
     <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             <div class="flex-shrink-0 flex items-center gap-3">
@@ -153,6 +196,247 @@
 </header>
 
 <main>
+
+<!-- ───────────── A4 인쇄 전용 일정표 ───────────── -->
+<div id="print-area">
+    <div class="print-header-top">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHfgIX70O5k6Anuo0UgALIdaG9jSga9auHu3uyz0uEirylGPAJnjN_qQbvEGMUvPqUQf_g9FMNUHRxlDcUBf4vZ3Mpy4TnA9WxbmzWYK11gt2zuy_Irl4wctNFjcjLyPo0GPXV792o_J7L9guRMuDfeC1gy7USwywjYbECZgzcsHybuGRRAXAnO1eNmP8/s320/logo.png" alt="Tourmaker">
+        <div class="print-doc-no">문서번호: TM-261127-BNE</div>
+    </div>
+    <div class="print-title">영월신천초 호주 UIL 스터디 투어 일정표 (9박 10일)</div>
+    <p class="print-subtitle">※ 본 일정표는 안내 초안이며, 현지 학교·어학원 사정 및 항공 상황에 따라 일부 변경될 수 있습니다.</p>
+    <div class="print-overview">
+        <div><span class="label">일정</span> 2026.11.27(금) ~ 12.06(일)</div>
+        <div><span class="label">대상</span> 영월신천초등학교</div>
+        <div><span class="label">항공</span> 대한항공(KE) 또는 젯스타(JQ) 직항</div>
+        <div><span class="label">숙박</span> 호주 현지 홈스테이 (UIL Springfield 배정)</div>
+        <div><span class="label">교육</span> UIL ESL · 로컬 스쿨링 · UniSQ 워크샵</div>
+    </div>
+    <table class="tm-table">
+        <thead><tr><th class="tm-col-date">일차/지역</th><th class="tm-col-desc">상세 일정 및 프로그램</th><th class="tm-col-meal">식사/숙박</th></tr></thead>
+        <tbody>
+            <tr class="tm-day-divider">
+                <td class="tm-col-date">1일차<br><span style="font-size:8px;font-weight:normal;color:#64748b">11/27(금)</span><br><br>인천<br>기내</td>
+                <td class="tm-col-desc">
+                    <div class="tm-time-flow"><span class="tm-time-tag">출발</span> 한국 출국</div>
+                    <ul class="tm-desc-list">
+                        <li>인천공항 집결 및 출국 수속</li>
+                        <li>브리즈번(BNE)행 <span class="tm-highlight">직항편 탑승·출발</span></li>
+                        <li>기내식 제공 및 기내 숙박</li>
+                    </ul>
+                </td>
+                <td class="tm-col-meal">
+                    <div class="tm-meal-wrapper">
+                        <div class="tm-meal-simple"><strong>조</strong> 불포함</div>
+                        <div class="tm-meal-simple"><strong>중</strong> 불포함</div>
+                        <div class="tm-meal-simple"><strong>석</strong> 기내식</div>
+                        <div class="tm-meal-simple"><strong>박</strong> 기내</div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="tm-day-divider">
+                <td class="tm-col-date">2일차<br><span style="font-size:8px;font-weight:normal;color:#64748b">11/28(토)</span><br><br>브리즈번</td>
+                <td class="tm-col-desc">
+                    <div class="tm-time-flow"><span class="tm-time-tag">오전</span> 브리즈번 도착 및 오리엔테이션 투어</div>
+                    <ul class="tm-desc-list">
+                        <li>브리즈번 공항 입국 및 현지 안내</li>
+                        <li>마운트 쿠사(Mt Coot-tha) 전망대</li>
+                        <li>퀸즐랜드 박물관 &amp; 사우스뱅크 투어</li>
+                    </ul>
+                    <div class="tm-time-flow"><span class="tm-time-tag">오후</span> UIL 캠퍼스 이동 및 홈스테이 배정</div>
+                    <ul class="tm-desc-list">
+                        <li>UIL Springfield 캠퍼스 이동</li>
+                        <li class="tm-highlight">호스트 패밀리 미팅 및 홈스테이 귀가</li>
+                    </ul>
+                    <hr class="tm-hotel-divider"><div class="tm-hotel-info">🏡 호주 현지 홈스테이 (UIL 배정)</div>
+                </td>
+                <td class="tm-col-meal">
+                    <div class="tm-meal-wrapper">
+                        <div class="tm-meal-simple"><strong>조</strong> 기내식</div>
+                        <div class="tm-meal-simple"><strong>중</strong> 현지식</div>
+                        <div class="tm-meal-simple"><strong>석</strong> 홈스테이</div>
+                        <div class="tm-meal-simple"><strong>박</strong> 홈스테이</div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="tm-day-divider">
+                <td class="tm-col-date">3일차<br><span style="font-size:8px;font-weight:normal;color:#64748b">11/29(일)</span><br><br>홈스테이</td>
+                <td class="tm-col-desc">
+                    <div class="tm-time-flow"><span class="tm-time-tag">종일</span> Homestay Family Day</div>
+                    <ul class="tm-desc-list">
+                        <li class="tm-highlight">호스트 패밀리와 하루 종일 함께하는 주말 체험</li>
+                        <li>지역 산책·쇼핑센터(Orion Springfield) 방문</li>
+                        <li>가족 활동 및 생활 영어 / 호주 가정문화 몰입</li>
+                    </ul>
+                    <hr class="tm-hotel-divider"><div class="tm-hotel-info">🏡 호주 현지 홈스테이 (동일 가정)</div>
+                </td>
+                <td class="tm-col-meal">
+                    <div class="tm-meal-wrapper">
+                        <div class="tm-meal-simple"><strong>조</strong> 홈스테이</div>
+                        <div class="tm-meal-simple"><strong>중</strong> 외부/가정</div>
+                        <div class="tm-meal-simple"><strong>석</strong> 홈스테이</div>
+                        <div class="tm-meal-simple"><strong>박</strong> 홈스테이</div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="tm-day-divider">
+                <td class="tm-col-date">4일차<br><span style="font-size:8px;font-weight:normal;color:#64748b">11/30(월)</span><br><br>UIL</td>
+                <td class="tm-col-desc">
+                    <div class="tm-time-flow"><span class="tm-time-tag">오전</span> UIL 1일차 — Orientation &amp; ESL</div>
+                    <div class="tm-time-flow"><span class="tm-time-tag">오후</span> ESL 심화 수업 및 아이스브레이킹</div>
+                    <ul class="tm-desc-list">
+                        <li>English Class (Closed Group)</li>
+                        <li class="tm-highlight">타 학생들과의 아이스브레이킹(Icebreaker) 액티비티</li>
+                    </ul>
+                    <hr class="tm-hotel-divider"><div class="tm-hotel-info">🏡 호주 현지 홈스테이</div>
+                </td>
+                <td class="tm-col-meal">
+                    <div class="tm-meal-wrapper">
+                        <div class="tm-meal-simple"><strong>조</strong> 홈스테이</div>
+                        <div class="tm-meal-simple"><strong>중</strong> 학교식</div>
+                        <div class="tm-meal-simple"><strong>석</strong> 홈스테이</div>
+                        <div class="tm-meal-simple"><strong>박</strong> 홈스테이</div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="tm-day-divider">
+                <td class="tm-col-date">5일차<br><span style="font-size:8px;font-weight:normal;color:#64748b">12/1(화)</span><br><br>UIL</td>
+                <td class="tm-col-desc">
+                    <div class="tm-time-flow"><span class="tm-time-tag">오전</span> UIL 2일차 — Orientation &amp; ESL</div>
+                    <div class="tm-time-flow"><span class="tm-time-tag">오후</span> ESL 수업 및 안전 교육</div>
+                    <ul class="tm-desc-list">
+                        <li>English Class (Closed Group)</li>
+                        <li class="tm-highlight">퀸즐랜드 경찰청 주관 안전 교육 세미나</li>
+                    </ul>
+                    <hr class="tm-hotel-divider"><div class="tm-hotel-info">🏡 호주 현지 홈스테이</div>
+                </td>
+                <td class="tm-col-meal">
+                    <div class="tm-meal-wrapper">
+                        <div class="tm-meal-simple"><strong>조</strong> 홈스테이</div>
+                        <div class="tm-meal-simple"><strong>중</strong> 학교식</div>
+                        <div class="tm-meal-simple"><strong>석</strong> 홈스테이</div>
+                        <div class="tm-meal-simple"><strong>박</strong> 홈스테이</div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="tm-day-divider">
+                <td class="tm-col-date">6일차<br><span style="font-size:8px;font-weight:normal;color:#64748b">12/2(수)</span><br><br>스쿨링</td>
+                <td class="tm-col-desc">
+                    <div class="tm-time-flow"><span class="tm-time-tag">오전</span> 로컬 스쿨링 (Integration)</div>
+                    <ul class="tm-desc-list">
+                        <li class="tm-highlight">Mastery Schools Australia Springfield 방문</li>
+                        <li>또래 현지 학생들과 교류 수업</li>
+                    </ul>
+                    <div class="tm-time-flow"><span class="tm-time-tag">오후</span> 생태 교육 체험</div>
+                    <ul class="tm-desc-list">
+                        <li>론파인 코알라 보호구역 (Lone Pine Koala Sanctuary)</li>
+                    </ul>
+                    <hr class="tm-hotel-divider"><div class="tm-hotel-info">🏡 호주 현지 홈스테이</div>
+                </td>
+                <td class="tm-col-meal">
+                    <div class="tm-meal-wrapper">
+                        <div class="tm-meal-simple"><strong>조</strong> 홈스테이</div>
+                        <div class="tm-meal-simple"><strong>중</strong> 외부식</div>
+                        <div class="tm-meal-simple"><strong>석</strong> 홈스테이</div>
+                        <div class="tm-meal-simple"><strong>박</strong> 홈스테이</div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="tm-day-divider">
+                <td class="tm-col-date">7일차<br><span style="font-size:8px;font-weight:normal;color:#64748b">12/3(목)</span><br><br>UIL</td>
+                <td class="tm-col-desc">
+                    <div class="tm-time-flow"><span class="tm-time-tag">오전</span> UIL 3일차 — ESL 수업</div>
+                    <div class="tm-time-flow"><span class="tm-time-tag">오후</span> ESL 수업 및 대학 워크샵</div>
+                    <ul class="tm-desc-list">
+                        <li>English Class (Closed Group)</li>
+                        <li class="tm-highlight">UniSQ 대학교 워크샵 체험</li>
+                    </ul>
+                    <hr class="tm-hotel-divider"><div class="tm-hotel-info">🏡 호주 현지 홈스테이</div>
+                </td>
+                <td class="tm-col-meal">
+                    <div class="tm-meal-wrapper">
+                        <div class="tm-meal-simple"><strong>조</strong> 홈스테이</div>
+                        <div class="tm-meal-simple"><strong>중</strong> 학교식</div>
+                        <div class="tm-meal-simple"><strong>석</strong> 홈스테이</div>
+                        <div class="tm-meal-simple"><strong>박</strong> 홈스테이</div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="tm-day-divider">
+                <td class="tm-col-date">8일차<br><span style="font-size:8px;font-weight:normal;color:#64748b">12/4(금)</span><br><br>UIL</td>
+                <td class="tm-col-desc">
+                    <div class="tm-time-flow"><span class="tm-time-tag">오전</span> UIL 4일차 — ESL 수업</div>
+                    <div class="tm-time-flow"><span class="tm-time-tag">오후</span> ESL 또는 문화체험 액티비티</div>
+                    <ul class="tm-desc-list">
+                        <li>English Class (Closed Group)</li>
+                        <li>별도 문화체험 / 캠퍼스 액티비티 (현지 협의 확정)</li>
+                        <li>프로그램 마무리</li>
+                    </ul>
+                    <hr class="tm-hotel-divider"><div class="tm-hotel-info">🏡 호주 현지 홈스테이</div>
+                </td>
+                <td class="tm-col-meal">
+                    <div class="tm-meal-wrapper">
+                        <div class="tm-meal-simple"><strong>조</strong> 홈스테이</div>
+                        <div class="tm-meal-simple"><strong>중</strong> 학교식</div>
+                        <div class="tm-meal-simple"><strong>석</strong> 홈스테이</div>
+                        <div class="tm-meal-simple"><strong>박</strong> 홈스테이</div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="tm-day-divider">
+                <td class="tm-col-date">9일차<br><span style="font-size:8px;font-weight:normal;color:#64748b">12/5(토)</span><br><br>골드코스트</td>
+                <td class="tm-col-desc">
+                    <div class="tm-time-flow"><span class="tm-time-tag">종일</span> 드림월드(Dreamworld) 풀데이</div>
+                    <ul class="tm-desc-list">
+                        <li class="tm-highlight">호주 최대 테마파크 중 하나 드림월드 종일 체험</li>
+                        <li>각종 어트랙션·라이드·쇼 관람</li>
+                        <li>석식 후 홈스테이 귀가 및 귀국 준비</li>
+                    </ul>
+                    <hr class="tm-hotel-divider"><div class="tm-hotel-info">🏡 호주 현지 홈스테이</div>
+                </td>
+                <td class="tm-col-meal">
+                    <div class="tm-meal-wrapper">
+                        <div class="tm-meal-simple"><strong>조</strong> 홈스테이</div>
+                        <div class="tm-meal-simple"><strong>중</strong> 외부식</div>
+                        <div class="tm-meal-simple"><strong>석</strong> 외부/홈</div>
+                        <div class="tm-meal-simple"><strong>박</strong> 홈스테이</div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="tm-day-divider">
+                <td class="tm-col-date">10일차<br><span style="font-size:8px;font-weight:normal;color:#64748b">12/6(일)</span><br><br>브리즈번<br>인천</td>
+                <td class="tm-col-desc">
+                    <div class="tm-time-flow"><span class="tm-time-tag">오전</span> Farewell to Homestay</div>
+                    <ul class="tm-desc-list">
+                        <li>호스트 패밀리와 작별</li>
+                        <li>브리즈번 공항 이동 및 출국 수속</li>
+                    </ul>
+                    <div class="tm-time-flow"><span class="tm-time-tag">오후</span> 한국 귀국</div>
+                    <ul class="tm-desc-list">
+                        <li class="tm-highlight">직항편 탑승 (호주 출발) → 인천공항 도착·부모님 인계</li>
+                    </ul>
+                </td>
+                <td class="tm-col-meal">
+                    <div class="tm-meal-wrapper">
+                        <div class="tm-meal-simple"><strong>조</strong> 홈스테이</div>
+                        <div class="tm-meal-simple"><strong>중</strong> 현지/기내</div>
+                        <div class="tm-meal-simple"><strong>석</strong> 기내식</div>
+                        <div class="tm-meal-simple"><strong>박</strong> -</div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="print-disclaimer">※ 홈스테이 체류 기간 조식·석식은 호스트 패밀리와 함께하며, 중식(점심)은 학교/어학원 및 외부 투어 일정 중 제공됩니다. ※ 11월 말~12월 초 호주 현지 학교 학사 일정에 따라 스쿨링·방문 기관이 일부 대체될 수 있습니다.</p>
+    <div class="print-contacts">
+        <span><span class="pc-role">총괄 책임</span> 이재명 대표 010-9443-7881</span>
+        <span><span class="pc-role">실무 담당</span> 조혁 이사 010-4249-4026</span>
+        <span><span class="pc-role">영사콜센터</span> +82-2-3210-0404</span>
+    </div>
+    <div class="print-credit">
+        <p class="print-credit-text">[System Powered by TOURMAKER] 본 스마트 가이드북은 <strong>영월신천초등학교</strong>의 기획과 투어메이커의 트래블 테크 기술 제휴로 제작되었습니다.</p>
+    </div>
+</div>
 
 <!-- ───────────── HERO ───────────── -->
 <section id="home" class="hero-bg-main text-white text-center flex items-center justify-center min-h-[85vh] md:min-h-[75vh] relative pb-24 pt-10 md:py-0">
@@ -499,7 +783,12 @@
     <div class="container mx-auto px-4">
         <div class="text-center mb-10">
             <span class="text-orange-600 font-bold tracking-wider uppercase">Weekly Schedule</span>
-            <h2 class="text-3xl md:text-4xl font-bold mt-2">일일 상세 일과표 (제안단계)</h2>
+            <div class="flex flex-wrap items-center justify-center gap-3 mt-2">
+                <h2 class="text-3xl md:text-4xl font-bold">일일 상세 일과표 (제안단계)</h2>
+                <button type="button" onclick="window.print()" class="no-print shrink-0 flex items-center gap-2 px-4 py-2 bg-[#004098] hover:bg-[#002d6b] text-white text-sm font-bold rounded-xl shadow-md transition-colors">
+                    <i class="fa-solid fa-print"></i> 일정표 인쇄하기
+                </button>
+            </div>
             <p class="text-slate-500 mt-2">홈스테이 패밀리 데이·안전 교육·코알라 생태 체험·현지 로컬 스쿨링·드림월드 등 다채로운 일정이 준비되어 있습니다.</p>
         </div>
 
@@ -825,7 +1114,7 @@
 </main>
 
 <!-- ───────────── FOOTER ───────────── -->
-<footer style="background-color:#f8f9fa;" class="py-12 border-t border-slate-200">
+<footer style="background-color:#f8f9fa;" class="py-12 border-t border-slate-200 no-print">
     <div class="container mx-auto px-4 text-center">
         <div class="flex flex-col items-center justify-center mb-6">
             <a href="http://tourmaker.kr" target="_blank" class="inline-block bg-white border border-slate-300 rounded-xl px-6 py-3 hover:shadow-md transition-shadow mb-6">
